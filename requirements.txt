@@ -1,0 +1,12 @@
+langchain-openai>=0.0.5
+langchain-community>=0.0.16
+langgraph>=0.0.15
+tavily-python>=0.2.6
+google-api-python-client>=2.118.0
+beautifulsoup4>=4.12.3
+pydantic>=2.6.1
+typing-extensions>=4.9.0
+python-dotenv>=1.0.1
+ipython>=8.12.0
+Pillow==10.2.0  # For PIL (Python Imaging Library)
+flask>=2.0.1
