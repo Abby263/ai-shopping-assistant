@@ -1,0 +1,148 @@
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.search-container {
+    background: linear-gradient(to right bottom, #ffffff, #f8f9fa);
+    border: 1px solid #e9ecef;
+    transition: all 0.3s ease;
+}
+
+.search-container:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 15px rgba(0,0,0,0.1) !important;
+}
+
+.product-card {
+    height: 100%;
+    transition: all 0.3s ease;
+    border: none;
+    background: linear-gradient(to bottom right, #ffffff, #f8f9fa);
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1) !important;
+}
+
+.price {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #198754;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.price::before {
+    content: '$';
+    font-size: 1rem;
+    opacity: 0.8;
+}
+
+.savings {
+    color: #dc3545;
+    font-weight: bold;
+    display: inline-block;
+    padding: 0.25rem 0.5rem;
+    background-color: #dc354522;
+    border-radius: 4px;
+}
+
+.retailer-badge {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.example-search {
+    transition: all 0.2s ease;
+}
+
+.example-search:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.spinner-grow {
+    width: 3rem;
+    height: 3rem;
+}
+
+footer {
+    margin-top: auto;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.card {
+    animation: fadeIn 0.5s ease-out;
+}
+
+.logs-container {
+    height: 200px;
+    overflow-y: auto;
+    background: #f8f9fa;
+    padding: 1rem;
+    border-radius: 0.25rem;
+    font-family: monospace;
+    font-size: 0.9rem;
+}
+
+.log-entry {
+    margin-bottom: 0.5rem;
+    padding: 0.25rem 0;
+    border-bottom: 1px solid #eee;
+    animation: fadeIn 0.3s ease-in;
+}
+
+.log-entry.search {
+    color: #0d6efd;
+}
+
+.log-entry.success {
+    color: #198754;
+}
+
+.log-entry.info {
+    color: #0dcaf0;
+}
+
+.log-entry.warning {
+    color: #ffc107;
+}
+
+.log-entry.error {
+    color: #dc3545;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.product-card {
+    transition: transform 0.2s;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.price {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #198754;
+} 
