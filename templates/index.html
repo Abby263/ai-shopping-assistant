@@ -1,95 +1,368 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Shopping Assistant</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="/static/style.css" rel="stylesheet">
-</head>
-<body>
-    <div class="container py-5">
-        <h1 class="text-center mb-4">🛍️ AI Shopping Assistant</h1>
+{% extends "base.html" %}
+
+{% block title %}Smart Shopping Assistant{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Global Styles */
+    body {
+        color: #374151;
+        line-height: 1.6;
+    }
+
+    /* Hero Section */
+    .hero-section {
+        background: linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%);
+        color: white;
+        padding: 3rem 0;
+        margin-top: -1.5rem;
+        margin-bottom: 2rem;
+        border-radius: 0 0 1.5rem 1.5rem;
+    }
+
+    .hero-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        line-height: 1.2;
+    }
+
+    .hero-subtitle {
+        font-size: 1.1rem;
+        opacity: 0.9;
+        margin-bottom: 1.5rem;
+        max-width: 500px;
+    }
+
+    /* Feature Cards */
+    .feature-card {
+        background: white;
+        border-radius: 0.75rem;
+        padding: 1.25rem;
+        margin-bottom: 1.25rem;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        transition: transform 0.2s, box-shadow 0.2s;
+        height: 100%;
+    }
+
+    .feature-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .feature-icon {
+        font-size: 1.75rem;
+        margin-bottom: 0.75rem;
+        color: #6366F1;
+    }
+
+    .feature-card h3 {
+        font-size: 1.25rem;
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+    }
+
+    .feature-card p {
+        font-size: 0.95rem;
+        color: #6B7280;
+        margin-bottom: 0;
+    }
+
+    /* Search Form */
+    .search-card {
+        border-radius: 0.75rem;
+        border: none;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        margin-bottom: 2rem;
+    }
+
+    .search-card h2 {
+        font-size: 1.5rem;
+        font-weight: 600;
+    }
+
+    .form-label {
+        font-size: 0.95rem;
+        font-weight: 500;
+        color: #4B5563;
+        margin-bottom: 0.5rem;
+    }
+
+    .form-control, .form-select {
+        border-radius: 0.5rem;
+        padding: 0.625rem 0.875rem;
+        font-size: 0.95rem;
+        border-color: #E5E7EB;
+    }
+
+    .form-control:focus, .form-select:focus {
+        border-color: #6366F1;
+        box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.1);
+    }
+
+    .form-control-lg {
+        font-size: 1rem;
+    }
+
+    /* Buttons */
+    .btn-primary {
+        background: #6366F1;
+        border: none;
+        border-radius: 0.5rem;
+        padding: 0.625rem 1.25rem;
+        font-weight: 500;
+        font-size: 0.95rem;
+        transition: all 0.2s;
+    }
+
+    .btn-primary:hover {
+        background: #4F46E5;
+        transform: translateY(-1px);
+    }
+
+    /* Results Section */
+    .results-container {
+        margin-top: 1.5rem;
+    }
+
+    .product-card {
+        border-radius: 0.75rem;
+        overflow: hidden;
+        transition: transform 0.2s, box-shadow 0.2s;
+        border: 1px solid #E5E7EB;
+    }
+
+    .product-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .product-card .card-title {
+        font-size: 1rem;
+        font-weight: 500;
+    }
+
+    .product-tag {
+        position: absolute;
+        top: 0.75rem;
+        right: 0.75rem;
+        background: rgba(99, 102, 241, 0.9);
+        color: white;
+        padding: 0.375rem 0.75rem;
+        border-radius: 1rem;
+        font-size: 0.875rem;
+        font-weight: 500;
+    }
+
+    /* Section Spacing */
+    .section-spacing {
+        margin-bottom: 3rem;
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 768px) {
+        .hero-title {
+            font-size: 2rem;
+        }
         
-        <div class="row justify-content-center mb-4">
-            <div class="col-md-8">
-                <form id="searchForm" class="mb-4">
-                    <div class="input-group">
-                        <input type="text" id="searchQuery" class="form-control form-control-lg" 
-                               placeholder="What are you looking for?" required>
-                        <button class="btn btn-primary btn-lg" type="submit">
-                            <i class="fas fa-search"></i> Search
-                        </button>
-                    </div>
-                </form>
+        .hero-subtitle {
+            font-size: 1rem;
+        }
+
+        .search-card h2 {
+            font-size: 1.25rem;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<div class="hero-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h1 class="hero-title">Shop Smarter with AI</h1>
+                <p class="hero-subtitle">Let our AI-powered shopping assistant find the perfect products tailored to your style and preferences.</p>
             </div>
-        </div>
-
-        <!-- Example Searches -->
-        <div id="exampleSearches" class="row justify-content-center mb-4">
-            <div class="col-md-8 text-center">
-                <p class="text-muted">Try these examples:</p>
-                <button class="btn btn-outline-secondary btn-sm m-1 example-search">Blue Nike shoes under $100</button>
-                <button class="btn btn-outline-secondary btn-sm m-1 example-search">Gaming laptop under $1500</button>
-                <button class="btn btn-outline-secondary btn-sm m-1 example-search">Red Puma t-shirt within $30</button>
-            </div>
-        </div>
-
-        <!-- Live Search Progress -->
-        <div id="searchProgress" class="row justify-content-center mb-4 d-none">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">
-                            <i class="fas fa-robot text-primary"></i> AI Assistant at Work
-                            <div class="float-end">
-                                <div class="spinner-border spinner-border-sm text-primary" role="status">
-                                    <span class="visually-hidden">Loading...</span>
-                                </div>
-                            </div>
-                        </h5>
-                        <div id="searchLogs" class="logs-container">
-                            <!-- Logs will be inserted here -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Loading Indicator -->
-        <div id="loading" class="text-center mb-4 d-none">
-            <div class="spinner-border text-primary" role="status">
-                <span class="visually-hidden">Loading...</span>
-            </div>
-        </div>
-
-        <!-- Error Display -->
-        <div id="error" class="alert alert-danger d-none" role="alert"></div>
-
-        <!-- Results Display -->
-        <div id="results" class="d-none">
-            <div class="row mb-4">
-                <div class="col-12">
-                    <div class="card">
-                        <div class="card-header bg-success text-white">
-                            <h4 class="mb-0">🏷️ Best Deal Found</h4>
-                        </div>
-                        <div class="card-body" id="bestDealContent">
-                            <!-- Best deal content will be inserted here -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <h3 class="mb-4">Available Products</h3>
-            <div class="row" id="productsContent">
-                <!-- Product cards will be inserted here -->
+            <div class="col-lg-6">
+                <img src="{{ url_for('static', filename='img/shopping-hero.svg') }}" alt="Shopping Assistant" class="img-fluid">
             </div>
         </div>
     </div>
+</div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="/static/script.js"></script>
-</body>
-</html> 
+<!-- Features Section -->
+<div class="container section-spacing">
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="feature-card text-center">
+                <div class="feature-icon">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <h3>AI-Powered</h3>
+                <p>Smart recommendations using advanced AI to understand your preferences</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="feature-card text-center">
+                <div class="feature-icon">
+                    <i class="fas fa-user-circle"></i>
+                </div>
+                <h3>Personalized</h3>
+                <p>Choose your shopping style: Trendsetter, Minimalist, or Savvy</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="feature-card text-center">
+                <div class="feature-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <h3>Best Deals</h3>
+                <p>Compare prices and find the best deals across multiple stores</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Search Form -->
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card search-card">
+                <div class="card-body p-4">
+                    <h2 class="text-center mb-4">Find Your Perfect Products</h2>
+                    <form id="searchForm" method="POST" action="{{ url_for('search') }}">
+                        <div class="mb-4">
+                            <label for="product_name" class="form-label">What are you looking for?</label>
+                            <input type="text" class="form-control form-control-lg" id="product_name" name="product_name" 
+                                   placeholder="e.g., wireless headphones, coffee maker, running shoes" required>
+                        </div>
+                        <div class="mb-4">
+                            <label for="shopper_type" class="form-label">Your Shopping Style</label>
+                            <select class="form-select form-select-lg" id="shopper_type" name="shopper_type">
+                                <option value="Trendsetter">✨ Trendsetter - Latest & Greatest</option>
+                                <option value="Minimalist">⚡ Minimalist - Quality & Purpose</option>
+                                <option value="Savvy">💎 Savvy - Best Value</option>
+                            </select>
+                        </div>
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <label for="max_suggestions" class="form-label">Number of Suggestions</label>
+                                <input type="number" class="form-control" id="max_suggestions" name="max_suggestions" 
+                                       value="3" min="1" max="10">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="sort_by" class="form-label">Sort Results By</label>
+                                <select class="form-select" id="sort_by" name="sort_by">
+                                    <option value="rating">Rating</option>
+                                    <option value="price_low">Price: Low to High</option>
+                                    <option value="price_high">Price: High to Low</option>
+                                    <option value="popularity">Popularity</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <label class="form-label">Price Range (Optional)</label>
+                            <div class="row">
+                                <div class="col-6">
+                                    <input type="number" class="form-control" name="min_price" placeholder="Min Price">
+                                </div>
+                                <div class="col-6">
+                                    <input type="number" class="form-control" name="max_price" placeholder="Max Price">
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-lg w-100">
+                            <i class="fas fa-search me-2"></i> Find Perfect Products
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Results Section -->
+<div class="container">
+    <div id="results" class="mb-4">
+        {% if results_html %}
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h3>Search Results</h3>
+                <button id="compareBtn" class="btn btn-secondary" disabled>
+                    Compare Selected (<span id="compareCount">0</span>)
+                </button>
+            </div>
+            <div class="results-container">
+                {{ results_html|safe }}
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Handle form submission with AJAX
+    $('#searchForm').on('submit', function(e) {
+        e.preventDefault();
+        $.ajax({
+            url: $(this).attr('action'),
+            method: 'POST',
+            data: $(this).serialize(),
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            },
+            success: function(response) {
+                $('#results').html(response.html);
+                // Track the search
+                $.post("{{ url_for('track_search') }}", {
+                    query: $('#product_name').val()
+                });
+            }
+        });
+    });
+
+    // Product comparison functionality
+    let selectedProducts = new Set();
+
+    $(document).on('click', '.product-card', function(e) {
+        if (!$(e.target).is('a, button')) {
+            const productId = $(this).data('product-id');
+            if ($(this).hasClass('selected')) {
+                $(this).removeClass('selected');
+                selectedProducts.delete(productId);
+            } else if (selectedProducts.size < 3) {
+                $(this).addClass('selected');
+                selectedProducts.add(productId);
+            }
+            updateCompareButton();
+        }
+    });
+
+    function updateCompareButton() {
+        const count = selectedProducts.size;
+        $('#compareCount').text(count);
+        $('#compareBtn').prop('disabled', count < 2);
+    }
+
+    $('#compareBtn').click(function() {
+        if (selectedProducts.size >= 2) {
+            const form = $('<form action="{{ url_for('compare_products') }}" method="POST"></form>');
+            selectedProducts.forEach(id => {
+                form.append(`<input type="hidden" name="product_ids[]" value="${id}">`);
+            });
+            $('body').append(form);
+            form.submit();
+        }
+    });
+
+    // Track product views
+    $(document).on('click', '.product-card a', function() {
+        const productId = $(this).closest('.product-card').data('product-id');
+        $.post("{{ url_for('track_product') }}", {
+            product_id: productId
+        });
+    });
+</script>
+{% endblock %} 

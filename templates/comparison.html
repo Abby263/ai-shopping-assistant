@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}Product Comparison{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="mb-0">Product Comparison</h3>
+            </div>
+            <div class="card-body">
+                {% if comparison %}
+                    {{ comparison_html|safe }}
+                    <div class="text-center mt-4">
+                        <a href="{{ url_for('index') }}" class="btn btn-primary">Back to Search</a>
+                    </div>
+                {% else %}
+                    <div class="alert alert-info">
+                        <h5>No products selected for comparison</h5>
+                        <p>Please select at least two products to compare.</p>
+                        <a href="{{ url_for('index') }}" class="btn btn-primary">Back to Search</a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .comparison-table th {
+        background-color: #f8f9fa;
+        font-weight: 600;
+    }
+    .comparison-table td {
+        vertical-align: middle;
+    }
+    .feature-name {
+        font-weight: 500;
+        color: #495057;
+    }
+</style>
+{% endblock %} 

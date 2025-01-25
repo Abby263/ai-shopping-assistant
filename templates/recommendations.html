@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block title %}Personalized Recommendations{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12 mb-4">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="mb-0">Your Personalized Recommendations</h3>
+                <p class="text-muted mb-0">Based on your browsing history and preferences</p>
+            </div>
+            <div class="card-body">
+                {% if recommendations %}
+                    <div class="row">
+                    {% for product in recommendations %}
+                        <div class="col-md-4 mb-4">
+                            <div class="card h-100 product-card">
+                                <span class="product-tag">{{ product.tag }}</span>
+                                <img src="{{ product.thumbnail }}" class="card-img-top" alt="{{ product.title }}">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ product.title }}</h5>
+                                    <p class="product-price">{{ product.price }}</p>
+                                    <p class="card-text text-muted">From {{ product.source }}</p>
+                                    <div class="d-flex justify-content-between">
+                                        <a href="{{ product.link }}" class="btn btn-primary" target="_blank">View Deal</a>
+                                        <button class="btn btn-outline-primary add-to-wishlist" data-product-id="{{ product.position }}">
+                                            <i class="fas fa-heart"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="alert alert-info">
+                        <h5>No recommendations yet!</h5>
+                        <p>Start browsing products to get personalized recommendations based on your interests.</p>
+                        <a href="{{ url_for('index') }}" class="btn btn-primary">Start Shopping</a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Handle wishlist additions
+    $('.add-to-wishlist').click(function() {
+        const productId = $(this).data('product-id');
+        $.post("{{ url_for('add_to_wishlist') }}", {
+            product_id: productId
+        }).done(function(response) {
+            if (response.success) {
+                alert('Added to wishlist!');
+            } else {
+                alert('Failed to add to wishlist: ' + response.error);
+            }
+        });
+    });
+</script>
+{% endblock %} 
