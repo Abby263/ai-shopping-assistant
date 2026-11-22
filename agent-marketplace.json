@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "id": "shopping-assistant",
+  "repository": "Abby263/ai-shopping-assistant",
+  "catalog": "candidate",
+  "availability": "request_integration",
+  "name": "Shopping Research Agent",
+  "category": "Commerce",
+  "description": "Compare product information and prices across retailers.",
+  "request": "Product requirements, region, and budget.",
+  "response": "Product comparisons with source references.",
+  "integration": {
+    "operation": "Return a comparison from configured sources.",
+    "readiness": "Validate source coverage and freshness before listing. Purchasing is outside this contract."
+  }
+}
